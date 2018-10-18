@@ -53,7 +53,7 @@ class StatusMenuController: NSObject {
 		icon?.isTemplate = true // best for dark mode
 		statusItem.button?.image = icon;
 		statusItem.menu = statusMenu
-		
+				
 		setRunAtStartup(runAtStartup: true)
 		setupTimer();
 	}
@@ -82,11 +82,15 @@ class StatusMenuController: NSObject {
 		}
 	}
 	
-	private func closeService() {
+	public func closeService() {
 		IOObjectRelease(service)
 		service    = 0     // Reset this incase open() is called again
 		acTimer.suspend()
 		GSMux.switcherClose()
+		
+		#if DEBUG
+		NSLog("Closing")
+		#endif
 	}
 	
 	public func isACPowered() -> Bool {
