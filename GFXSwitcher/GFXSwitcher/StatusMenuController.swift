@@ -33,7 +33,9 @@ class StatusMenuController: NSObject {
 	}
 	
 	private func setRunAtStartup(runAtStartup: Bool) {
-		if SMLoginItemSetEnabled(APP_HELPER_BUNDLE_ID, runAtStartup) {
+		let succeeded = SMLoginItemSetEnabled(APP_HELPER_BUNDLE_ID, runAtStartup)
+		#if DEBUG
+		if (succeeded) {
 			if runAtStartup {
 				NSLog("Successfully added login item!")
 			} else {
@@ -43,10 +45,11 @@ class StatusMenuController: NSObject {
 		} else {
 			NSLog("Failed to add login item.")
 		}
+		#endif
 	}
 	
 	override func awakeFromNib() {
-		let icon = NSImage(named: "gpuIcon")
+		let icon = NSImage(named: "MenuIcon")
 		icon?.isTemplate = true // best for dark mode
 		statusItem.button?.image = icon;
 		statusItem.menu = statusMenu
@@ -82,6 +85,7 @@ class StatusMenuController: NSObject {
 	private func closeService() {
 		IOObjectRelease(service)
 		service    = 0     // Reset this incase open() is called again
+		acTimer.suspend()
 		GSMux.switcherClose()
 	}
 	
@@ -99,17 +103,23 @@ class StatusMenuController: NSObject {
 		var result: Bool = false;
 		if (acPowered) {
 			result = GSMux.setMode(GSSwitcherModeForceDiscrete)
+			#if DEBUG
 			NSLog("Setting Discrete");
+			#endif
 		} else {
 			result = GSMux.setMode(GSSwitcherModeDynamicSwitching)
+			#if DEBUG
 			NSLog("Setting Dynamic");
+			#endif
 		}
 		
+		#if DEBUG
 		NSLog("Switching Result: " + BoolToString(b: result))
 		NSLog("Discrete: " + BoolToString(b: GSMux.isUsingDiscreteGPU()))
 		NSLog("Integrated: " + BoolToString(b: GSMux.isUsingIntegratedGPU()))
 		NSLog("Dynamic: " + BoolToString(b: GSMux.isUsingDynamicSwitching()))
 		NSLog("\n")
+		#endif
 
 		return acPowered
 	}
