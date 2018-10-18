@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+            <connections>
+                <outlet property="delegate" destination="Voe-Tx-rLC" id="GzC-gU-4Uq"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="GFXSwitcher" customModuleProvider="target"/>
+        <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <menu id="JHd-lj-Pm0">
+            <items>
+                <menuItem title="Run At Startup" state="on" id="7Ep-HX-qKJ">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="setRunAtStartup:" target="tSR-GE-r2d" id="dkt-AF-2Vt"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Quit" id="Wdl-hX-gKK">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="quitClickedWithSender:" target="tSR-GE-r2d" id="YJ4-gE-xeH"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
+        <customObject id="tSR-GE-r2d" customClass="StatusMenuController" customModule="GFXSwitcher" customModuleProvider="target">
+            <connections>
+                <outlet property="statusMenu" destination="JHd-lj-Pm0" id="WNf-Ka-cwX"/>
+            </connections>
+        </customObject>
+    </objects>
+</document>
